@@ -1,0 +1,5 @@
+# Ignore PyInstaller Build
+/__pycache__/**
+/bin/**
+/build/**
+/TextScramble.spec
