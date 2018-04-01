@@ -4,13 +4,17 @@
 import sys
 import random
 from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QComboBox, QPlainTextEdit, QLabel
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QComboBox, QPlainTextEdit, QLabel, QCheckBox
+from PyQt5.QtWidgets import QSizePolicy
 
+
+EMOJISETIDX = 6
+DISCORDSETIDX = 7
 
 # Character sets convering a-z, A-Z and 0-9
 charSets = [
 
-  # Cursive Characters
+  # 0 - Cursive Characters
   [
   u'\uD835\uDCB6', u'\uD835\uDCB7', u'\uD835\uDCB8', u'\uD835\uDCB9', u'\uD835\uDC52',
   u'\uD835\uDCBB', u'\uD835\uDC54', u'\uD835\uDCBD', u'\uD835\uDCBE', u'\uD835\uDCBF',
@@ -27,7 +31,7 @@ charSets = [
   u'\uD835\uDFEA', u'\uD835\uDFEB'
   ],
 
-  # Bold Cursive Characters
+  # 1- Bold Cursive Characters
   [
   u'\uD835\uDCEA', u'\uD835\uDCEB', u'\uD835\uDCEC', u'\uD835\uDCED', u'\uD835\uDCEE',
   u'\uD835\uDCEF', u'\uD835\uDCF0', u'\uD835\uDCF1', u'\uD835\uDCF2', u'\uD835\uDCF3',
@@ -42,7 +46,7 @@ charSets = [
   u'\uD835\uDCE8', u'\uD835\uDCE9', u'0', u'1', u'2', u'3', u'4', u'5', u'6', u'7', u'8', u'9'
   ],
 
-  # Hollow Characters
+  # 2 - Hollow Characters
   [
   u'\uD835\uDD52', u'\uD835\uDD53', u'\uD835\uDD54', u'\uD835\uDD55', u'\uD835\uDD56',
   u'\uD835\uDD57', u'\uD835\uDD58', u'\uD835\uDD59', u'\uD835\uDD5A', u'\uD835\uDD5B',
@@ -59,7 +63,7 @@ charSets = [
   u'\uD835\uDFE1'
   ],
 
-  # Gothic Characters
+  # 3 - Gothic Characters
   [
   u'\uD835\uDD86', u'\uD835\uDD87', u'\uD835\uDD88', u'\uD835\uDD89', u'\uD835\uDD8A',
   u'\uD835\uDD8B', u'\uD835\uDD8C', u'\uD835\uDD8D', u'\uD835\uDD8E', u'\uD835\uDD8F',
@@ -74,7 +78,7 @@ charSets = [
   u'\uD835\uDD84', u'\uD835\uDD85', u'0', u'1', u'2', u'3', u'4', u'5', u'6', u'7', u'8', u'9'
   ],
 
-  # Encircled Characters
+  # 4- Circled Characters
   [
   u'\u24D0', u'\u24D1', u'\u24D2', u'\u24D3', u'\u24D4', u'\u24D5', u'\u24D6', u'\u24D7',
   u'\u24D8', u'\u24D9', u'\u24DA', u'\u24DB', u'\u24DC', u'\u24DD', u'\u24DE', u'\u24DF',
@@ -86,7 +90,21 @@ charSets = [
   u'\u2463', u'\u2464', u'\u2465', u'\u2466', u'\u2467', u'\u2468'
   ],
   
-  # EXTRA THICC Characters (Only Uppercase)
+  
+  # 5 - Negative Circled Characters
+  
+  
+  # 6 - Squared Characters
+  # 🄰
+  # Squared Latin Capital Letter A - Enclosed Alphanumeric Supplement
+  
+  
+  # 7 - Negative Squared Characters
+  # 🅰
+  # Negative Squared Latin Capital Letter A - Enclosed Alphanumeric Supplement
+  
+  
+  # 8 - EXTRA THICC Characters (Only Uppercase)
   [
   u'\u5342', u'\u4E43', u'\u531A', u'\u5200', u'\u4E47', u'\u4E0B', u'\u53B6', u'\u5344',
   u'\u5DE5', u'\u4E01', u'\u957F', u'\u4E5A', u'\u4ECE', u'\uD841\uDE28', u'\u53E3', u'\u5C38',
@@ -95,39 +113,89 @@ charSets = [
   u'\u53B6', u'\u5344', u'\u5DE5', u'\u4E01', u'\u957F', u'\u4E5A', u'\u4ECE', u'\uD841\uDE28',
   u'\u53E3', u'\u5C38', u'\u353F', u'\u5C3A', u'\u4E02', u'\u4E05', u'\u51F5', u'\u30EA',
   u'\u5C71', u'\u4E42', u'\u4E2B', u'\u4E59', u'0', u'1', u'2', u'3', u'4', u'5', u'6', u'7', u'8', u'9'
+  ],
+  
+  # 9 - Emoji Characters
+  [
+  u'\uD83C\uDDE6', u'\uD83C\uDDE7', u'\uD83C\uDDE8', u'\uD83C\uDDE9', u'\uD83C\uDDEA',
+  u'\uD83C\uDDEB', u'\uD83C\uDDEC', u'\uD83C\uDDED', u'\uD83C\uDDEE', u'\uD83C\uDDEF',
+  u'\uD83C\uDDF0', u'\uD83C\uDDF1', u'\uD83C\uDDF2', u'\uD83C\uDDF3', u'\uD83C\uDDF4',
+  u'\uD83C\uDDF5', u'\uD83C\uDDF6', u'\uD83C\uDDF7', u'\uD83C\uDDF8', u'\uD83C\uDDF9',
+  u'\uD83C\uDDFA', u'\uD83C\uDDFB', u'\uD83C\uDDFC', u'\uD83C\uDDFD', u'\uD83C\uDDFE',
+  u'\uD83C\uDDFF',
+  u'\uD83C\uDDE6', u'\uD83C\uDDE7', u'\uD83C\uDDE8', u'\uD83C\uDDE9', u'\uD83C\uDDEA',
+  u'\uD83C\uDDEB', u'\uD83C\uDDEC', u'\uD83C\uDDED', u'\uD83C\uDDEE', u'\uD83C\uDDEF',
+  u'\uD83C\uDDF0', u'\uD83C\uDDF1', u'\uD83C\uDDF2', u'\uD83C\uDDF3', u'\uD83C\uDDF4',
+  u'\uD83C\uDDF5', u'\uD83C\uDDF6', u'\uD83C\uDDF7', u'\uD83C\uDDF8', u'\uD83C\uDDF9',
+  u'\uD83C\uDDFA', u'\uD83C\uDDFB', u'\uD83C\uDDFC', u'\uD83C\uDDFD', u'\uD83C\uDDFE',
+  u'\uD83C\uDDFF',
+  u'0\u20E3', u'1\u20E3', u'2\u20E3', u'3\u20E3', u'4\u20E3', u'5\u20E3', u'6\u20E3',
+  u'7\u20E3', u'8\u20E3', u'9\u20E3'
+  ],
+  
+  # 10 - Discord-Friendly Emoji Characters - Same as Emoji Characters with Space on right side
+  # Prevents creation of flag icons
+  [
+  u'\uD83C\uDDE6 ', u'\uD83C\uDDE7 ', u'\uD83C\uDDE8 ', u'\uD83C\uDDE9 ', u'\uD83C\uDDEA ',
+  u'\uD83C\uDDEB ', u'\uD83C\uDDEC ', u'\uD83C\uDDED ', u'\uD83C\uDDEE ', u'\uD83C\uDDEF ',
+  u'\uD83C\uDDF0 ', u'\uD83C\uDDF1 ', u'\uD83C\uDDF2 ', u'\uD83C\uDDF3 ', u'\uD83C\uDDF4 ',
+  u'\uD83C\uDDF5 ', u'\uD83C\uDDF6 ', u'\uD83C\uDDF7 ', u'\uD83C\uDDF8 ', u'\uD83C\uDDF9 ',
+  u'\uD83C\uDDFA ', u'\uD83C\uDDFB ', u'\uD83C\uDDFC ', u'\uD83C\uDDFD ', u'\uD83C\uDDFE ',
+  u'\uD83C\uDDFF ',
+  u'\uD83C\uDDE6 ', u'\uD83C\uDDE7 ', u'\uD83C\uDDE8 ', u'\uD83C\uDDE9 ', u'\uD83C\uDDEA ',
+  u'\uD83C\uDDEB ', u'\uD83C\uDDEC ', u'\uD83C\uDDED ', u'\uD83C\uDDEE ', u'\uD83C\uDDEF ',
+  u'\uD83C\uDDF0 ', u'\uD83C\uDDF1 ', u'\uD83C\uDDF2 ', u'\uD83C\uDDF3 ', u'\uD83C\uDDF4 ',
+  u'\uD83C\uDDF5 ', u'\uD83C\uDDF6 ', u'\uD83C\uDDF7 ', u'\uD83C\uDDF8 ', u'\uD83C\uDDF9 ',
+  u'\uD83C\uDDFA ', u'\uD83C\uDDFB ', u'\uD83C\uDDFC ', u'\uD83C\uDDFD ', u'\uD83C\uDDFE ',
+  u'\uD83C\uDDFF ',
+  u'0\u20E3 ', u'1\u20E3 ', u'2\u20E3 ', u'3\u20E3 ', u'4\u20E3 ', u'5\u20E3 ', u'6\u20E3 ',
+  u'7\u20E3 ', u'8\u20E3 ', u'9\u20E3 '
   ]
+  
 ]
+
+
 
 # Convert Surrogate Form to UTF-16 escape sequence (Multi-escape to Single Escape)
 def as_surrogates(str):
   return str.encode('utf-16', 'surrogatepass').decode('utf-16')
 
 
-def to_random_text(str, charSet=None):
-  outputText = ""
+def to_random_text(str, charSet=None, filterEmojiNums=True):
+  outputText    = ""
+  maxCharsetIdx = len(charSets) - 1
+  
   for c in str:
-    num = ord(c)
-    usedSpecialChar = True
+    num         = ord(c)
+    charType    = 0      # 0 = Invalid, 1 = Lowercase, 2 = Capital, 3 = Number
     selectedSet = 0
     
     # Allow a specific charset to be forced safely
     if charSet is None:
-      selectedSet = random.randint(0, len(charSets)-1)
+      selectedSet = random.randint(0, maxCharsetIdx)
     elif 0 <= charSet < len(charSets):
       selectedSet = charSet
     
     # Convert ASCII to match CharSet Lists
     if 97 <= num <= 122:
       num -= 97 # Offset to 0 to 25 range (a-z)
+      charType = 1
     elif 65 <= num <= 90:
       num -= 39 # Offset to 26 to 51 range (A-Z)
+      charType = 2
     elif 48 <= num <= 57:
       num += 4  # Offset to 52 to 61 range (0-9)
-    else:
-      usedSpecialChar = False
+      charType = 3
+    
+    # Prevent Using Emoji Numbers
+    if charType == 3 and (selectedSet == EMOJISETIDX or selectedSet == DISCORDSETIDX) and filterEmojiNums:
+      if charSet is None: # If using random sets, select one that is non-emoji
+        selectedSet = random.randint(0, maxCharsetIdx) % min(EMOJISETIDX, DISCORDSETIDX)
+      else:               # If forced set, use regular numbers
+        charType = 0
     
     # Add Character to output string
-    if usedSpecialChar:
+    if charType > 0:
       if num < len(charSets[selectedSet]):
         outputText += as_surrogates(charSets[selectedSet][num])
     else:
@@ -171,8 +239,10 @@ class MainWindow(QWidget):
     self.modeSelect.addItem('Bold Cursive Characters')
     self.modeSelect.addItem('Hollow Characters')
     self.modeSelect.addItem('Gothic Characters')
-    self.modeSelect.addItem('Encircled Characters')
+    self.modeSelect.addItem('Circled Characters')
     self.modeSelect.addItem(u'乇乂丅尺卂 丅卄工匚匚 Characters')
+    self.modeSelect.addItem('Emoji Characters')
+    self.modeSelect.addItem('Discord-Friendly Emoji Characters') # Emoji Characters with 1-space either side
     self.modeSelect.addItem('Random')
     self.randomModeIndex = self.modeSelect.count()-1
     self.modeSelect.setCurrentIndex(self.randomModeIndex) # Random by default
@@ -181,8 +251,16 @@ class MainWindow(QWidget):
     
     modeLabel = QLabel('Font Mode', self)
     self.charCountLabel = QLabel('Characters: 0', self)
+    self.filterEmojiNumbers = QCheckBox('Filter Emoji Numbers', self)
+    self.filterEmojiNumbers.setChecked(True)
+    self.filterEmojiNumbers.stateChanged.connect(self.UpdateOutputText)
+    
+    self.charCountLabel.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
+    self.filterEmojiNumbers.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
+    modeLabel.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
     
     modeLayout.addWidget(self.charCountLabel, 1) # Stretch
+    modeLayout.addWidget(self.filterEmojiNumbers)
     modeLayout.addWidget(modeLabel)
     modeLayout.addWidget(self.modeSelect)
     
@@ -210,7 +288,7 @@ class MainWindow(QWidget):
     
   def UpdateOutputText(self):
     mode = None if self.GetFontMode() == self.randomModeIndex else self.GetFontMode();
-    self.displayField.setPlainText(to_random_text(self.textField.toPlainText(), mode))
+    self.displayField.setPlainText(to_random_text(self.textField.toPlainText(), mode, self.filterEmojiNumbers.isChecked()))
     self.UpdateCharCount()
   
     
