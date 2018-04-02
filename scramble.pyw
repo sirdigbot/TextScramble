@@ -302,6 +302,59 @@ charSets = [
   u'0', u'1', u'2', u'3', u'4', u'5', u'6', u'7', u'8', u'9'
   ],
   
+  
+  # 19 - Dotted Characters
+  [
+  u'\u00E4', u'\u1E05', u'\u010B', u'\u1E0B', u'\u00EB', u'\u1E1F', u'\u0121', u'\u1E27',
+  u'\u00EF', u'j', u'\u1E33', u'\u1E37', u'\u1E41', u'\u1E45', u'\u00F6', u'\u1E57',
+  u'q', u'\u1E5B', u'\u1E61', u'\u1E97', u'\u00FC', u'\u1E7F', u'\u1E85', u'\u1E8D',
+  u'\u00FF', u'\u017C', u'\u00C4', u'\u1E04', u'\u010A', u'\u1E0A', u'\u0401', u'\u1E1E',
+  u'\u0120', u'\u1E26', u'\u0407', u'J', u'\u1E32', u'\u1E36', u'\u1E40', u'\u1E44',
+  u'\u00D6', u'\u1E56', u'Q', u'\u1E5A', u'\u1E60', u'\u1E6A', u'\u00DC', u'\u1E7E',
+  u'\u1E84', u'\u1E8C', u'\u0178', u'\u017B',
+  u'0', u'1', u'2', u'\u04DF', u'4', u'5', u'6', u'7', u'8', u'9'
+  ],
+  
+  
+  # 20 - Stroked Characters
+  [
+  u'\u023A', u'\u0180', u'\u023C', u'\u0111', u'\u0247', u'f', u'\u01E5', u'\u0127',
+  u'\u0268', u'\u0249', u'\uA741', u'\u0142', u'm', u'n', u'\u00F8', u'\u1D7D',
+  u'\uA757', u'\u024D', u's', u'\u0167', u'\u1D7E', u'v', u'w', u'x',
+  u'\u024F', u'\u01B6', u'\u023A', u'\u0243', u'\u023B', u'\u0110', u'\u0246', u'F',
+  u'\u01E4', u'\u0126', u'\u0197', u'\u0248', u'\uA740', u'\u0141', u'M', u'N',
+  u'\u00D8', u'\u2C63', u'\uA756', u'\u024C', u'S', u'\u0166', u'\u1D7E', u'V',
+  u'W', u'X', u'\u024E', u'\u01B5',
+  u'0', u'1', u'\u01BB', u'3', u'4', u'5', u'6', u'7', u'8', u'9'
+  ],
+  
+  
+  # 21 - Underlined Characters
+  [
+  u'a\u035F', u'b\u035F', u'c\u035F', u'd\u035F', u'e\u035F', u'f\u035F', u'g\u035F', u'h\u035F',
+  u'i\u035F', u'j\u035F', u'k\u035F', u'l\u035F', u'm\u035F', u'n\u035F', u'o\u035F', u'p\u035F',
+  u'q\u035F', u'r\u035F', u's\u035F', u't\u035F', u'u\u035F', u'v\u035F', u'w\u035F', u'x\u035F',
+  u'y\u035F', u'z\u035F',
+  u'A\u035F', u'B\u035F', u'C\u035F', u'D\u035F', u'E\u035F', u'F\u035F', u'G\u035F', u'H\u035F',
+  u'I\u035F', u'J\u035F', u'K\u035F', u'L\u035F', u'M\u035F', u'N\u035F', u'O\u035F', u'P\u035F',
+  u'Q\u035F', u'R\u035F', u'S\u035F', u'T\u035F', u'U\u035F', u'V\u035F', u'W\u035F', u'X\u035F',
+  u'Y\u035F', u'Z\u035F',
+  u'0\u035F', u'1\u035F', u'2\u035F', u'3\u035F', u'4\u035F', u'5\u035F', u'6\u035F', u'7\u035F', u'8\u035F', u'9\u035F'
+  ],
+  
+  
+  # 22 - Double Underlined Characters
+  [
+  u'a\u0347', u'b\u0347', u'c\u0347', u'd\u0347', u'e\u0347', u'f\u0347', u'g\u0347', u'h\u0347',
+  u'i\u0347', u'j\u0347', u'k\u0347', u'l\u0347', u'm\u0347', u'n\u0347', u'o\u0347', u'p\u0347',
+  u'q\u0347', u'r\u0347', u's\u0347', u't\u0347', u'u\u0347', u'v\u0347', u'w\u0347', u'x\u0347',
+  u'y\u0347', u'z\u0347',
+  u'A\u0347', u'B\u0347', u'C\u0347', u'D\u0347', u'E\u0347', u'F\u0347', u'G\u0347', u'H\u0347',
+  u'I\u0347', u'J\u0347', u'K\u0347', u'L\u0347', u'M\u0347', u'N\u0347', u'O\u0347', u'P\u0347',
+  u'Q\u0347', u'R\u0347', u'S\u0347', u'T\u0347', u'U\u0347', u'V\u0347', u'W\u0347', u'X\u0347',
+  u'Y\u0347', u'Z\u0347',
+  u'0\u0347', u'1\u0347', u'2\u0347', u'3\u0347', u'4\u0347', u'5\u0347', u'6\u0347', u'7\u0347', u'8\u0347', u'9\u0347'
+  ]
 
   
 ]
@@ -403,13 +456,17 @@ class MainWindow(wx.Frame):
     self.modeSelect.Append(u'乇乂丅尺卂 丅卄工匚匚')
     self.modeSelect.Append('Emoji')
     self.modeSelect.Append('Discord-Friendly Emoji') # Emoji Characters with 1-space either side
-    self.modeSelect.Append('Fullwidth Characters')
-    self.modeSelect.Append('Parenthesized Characters')
-    self.modeSelect.Append('\'Curvy\' Characters')
-    self.modeSelect.Append('Faux Cyrllic Characters')
-    self.modeSelect.Append('Faux Ethiopic Characters')
-    self.modeSelect.Append('Superscript Characters')
-    self.modeSelect.Append('Inverted Characters')
+    self.modeSelect.Append('Fullwidth')
+    self.modeSelect.Append('Parenthesized')
+    self.modeSelect.Append('\'Curvy\'')
+    self.modeSelect.Append('Faux Cyrllic')
+    self.modeSelect.Append('Faux Ethiopic')
+    self.modeSelect.Append('Superscript')
+    self.modeSelect.Append('Inverted')
+    self.modeSelect.Append('Dotted')
+    self.modeSelect.Append('Stroked')
+    self.modeSelect.Append('Underlined')
+    self.modeSelect.Append('Double Underlined')
     self.modeSelect.Append('Random')
     
     # Set Default Font Mode to randomModeIndex
