@@ -3,3 +3,9 @@
 /bin/**
 /build/**
 /TextScramble.spec
+
+# Ignore MSVC Build
+/msvc2017/.vs/**
+/msvc2017/bin/**
+/msvc2017/build/**
+/msvc2017/textscramble.vcxproj.user
