@@ -8,8 +8,8 @@ from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QCo
 from PyQt5.QtWidgets import QSizePolicy
 
 
-EMOJISETIDX = 6
-DISCORDSETIDX = 7
+EMOJISETIDX = 9
+DISCORDSETIDX = 10
 
 # Character sets convering a-z, A-Z and 0-9
 charSets = [
@@ -78,7 +78,7 @@ charSets = [
   u'\uD835\uDD84', u'\uD835\uDD85', u'0', u'1', u'2', u'3', u'4', u'5', u'6', u'7', u'8', u'9'
   ],
 
-  # 4- Circled Characters
+  # 4 - Circled Characters
   [
   u'\u24D0', u'\u24D1', u'\u24D2', u'\u24D3', u'\u24D4', u'\u24D5', u'\u24D6', u'\u24D7',
   u'\u24D8', u'\u24D9', u'\u24DA', u'\u24DB', u'\u24DC', u'\u24DD', u'\u24DE', u'\u24DF',
@@ -91,17 +91,59 @@ charSets = [
   ],
   
   
-  # 5 - Negative Circled Characters
+  # 5 - Negative Circled Characters (Only Uppercase)
+  [
+  u'\uD83C\uDD50', u'\uD83C\uDD51', u'\uD83C\uDD52', u'\uD83C\uDD53', u'\uD83C\uDD54',
+  u'\uD83C\uDD55', u'\uD83C\uDD56', u'\uD83C\uDD57', u'\uD83C\uDD58', u'\uD83C\uDD59',
+  u'\uD83C\uDD5A', u'\uD83C\uDD5B', u'\uD83C\uDD5C', u'\uD83C\uDD5D', u'\uD83C\uDD5E',
+  u'\uD83C\uDD5F', u'\uD83C\uDD60', u'\uD83C\uDD61', u'\uD83C\uDD62', u'\uD83C\uDD63',
+  u'\uD83C\uDD64', u'\uD83C\uDD65', u'\uD83C\uDD66', u'\uD83C\uDD67', u'\uD83C\uDD68',
+  u'\uD83C\uDD69',
+  u'\uD83C\uDD50', u'\uD83C\uDD51', u'\uD83C\uDD52', u'\uD83C\uDD53', u'\uD83C\uDD54',
+  u'\uD83C\uDD55', u'\uD83C\uDD56', u'\uD83C\uDD57', u'\uD83C\uDD58', u'\uD83C\uDD59',
+  u'\uD83C\uDD5A', u'\uD83C\uDD5B', u'\uD83C\uDD5C', u'\uD83C\uDD5D', u'\uD83C\uDD5E',
+  u'\uD83C\uDD5F', u'\uD83C\uDD60', u'\uD83C\uDD61', u'\uD83C\uDD62', u'\uD83C\uDD63',
+  u'\uD83C\uDD64', u'\uD83C\uDD65', u'\uD83C\uDD66', u'\uD83C\uDD67', u'\uD83C\uDD68',
+  u'\uD83C\uDD69',
+  u'\u24FF', u'\u2776', u'\u2777', u'\u2778', u'\u2779', u'\u277A', u'\u277B',
+  u'\u277C', u'\u277D', u'\u277E'
+  ],
   
   
-  # 6 - Squared Characters
-  # 🄰
-  # Squared Latin Capital Letter A - Enclosed Alphanumeric Supplement
+  # 6 - Squared Characters (Only Uppercase)
+  [
+  u'\uD83C\uDD30', u'\uD83C\uDD31', u'\uD83C\uDD32', u'\uD83C\uDD33', u'\uD83C\uDD34',
+  u'\uD83C\uDD35', u'\uD83C\uDD36', u'\uD83C\uDD37', u'\uD83C\uDD38', u'\uD83C\uDD39',
+  u'\uD83C\uDD3A', u'\uD83C\uDD3B', u'\uD83C\uDD3C', u'\uD83C\uDD3D', u'\uD83C\uDD3E',
+  u'\uD83C\uDD3F', u'\uD83C\uDD40', u'\uD83C\uDD41', u'\uD83C\uDD42', u'\uD83C\uDD43',
+  u'\uD83C\uDD44', u'\uD83C\uDD45', u'\uD83C\uDD46', u'\uD83C\uDD47', u'\uD83C\uDD48',
+  u'\uD83C\uDD49',
+  u'\uD83C\uDD30', u'\uD83C\uDD31', u'\uD83C\uDD32', u'\uD83C\uDD33', u'\uD83C\uDD34',
+  u'\uD83C\uDD35', u'\uD83C\uDD36', u'\uD83C\uDD37', u'\uD83C\uDD38', u'\uD83C\uDD39',
+  u'\uD83C\uDD3A', u'\uD83C\uDD3B', u'\uD83C\uDD3C', u'\uD83C\uDD3D', u'\uD83C\uDD3E',
+  u'\uD83C\uDD3F', u'\uD83C\uDD40', u'\uD83C\uDD41', u'\uD83C\uDD42', u'\uD83C\uDD43',
+  u'\uD83C\uDD44', u'\uD83C\uDD45', u'\uD83C\uDD46', u'\uD83C\uDD47', u'\uD83C\uDD48',
+  u'\uD83C\uDD49',
+  u'0', u'1', u'2', u'3', u'4', u'5', u'6', u'7', u'8', u'9'
+  ],
   
   
-  # 7 - Negative Squared Characters
-  # 🅰
-  # Negative Squared Latin Capital Letter A - Enclosed Alphanumeric Supplement
+  # 7 - Negative Squared Characters (Only Uppercase)
+  [
+  u'\uD83C\uDD70', u'\uD83C\uDD71', u'\uD83C\uDD72', u'\uD83C\uDD73', u'\uD83C\uDD74',
+  u'\uD83C\uDD75', u'\uD83C\uDD76', u'\uD83C\uDD77', u'\uD83C\uDD78', u'\uD83C\uDD79',
+  u'\uD83C\uDD7A', u'\uD83C\uDD7B', u'\uD83C\uDD7C', u'\uD83C\uDD7D', u'\uD83C\uDD7E',
+  u'\uD83C\uDD7F', u'\uD83C\uDD80', u'\uD83C\uDD81', u'\uD83C\uDD82', u'\uD83C\uDD83',
+  u'\uD83C\uDD84', u'\uD83C\uDD85', u'\uD83C\uDD86', u'\uD83C\uDD87', u'\uD83C\uDD88',
+  u'\uD83C\uDD89',
+  u'\uD83C\uDD70', u'\uD83C\uDD71', u'\uD83C\uDD72', u'\uD83C\uDD73', u'\uD83C\uDD74',
+  u'\uD83C\uDD75', u'\uD83C\uDD76', u'\uD83C\uDD77', u'\uD83C\uDD78', u'\uD83C\uDD79',
+  u'\uD83C\uDD7A', u'\uD83C\uDD7B', u'\uD83C\uDD7C', u'\uD83C\uDD7D', u'\uD83C\uDD7E',
+  u'\uD83C\uDD7F', u'\uD83C\uDD80', u'\uD83C\uDD81', u'\uD83C\uDD82', u'\uD83C\uDD83',
+  u'\uD83C\uDD84', u'\uD83C\uDD85', u'\uD83C\uDD86', u'\uD83C\uDD87', u'\uD83C\uDD88',
+  u'\uD83C\uDD89',
+  u'0', u'1', u'2', u'3', u'4', u'5', u'6', u'7', u'8', u'9'
+  ],
   
   
   # 8 - EXTRA THICC Characters (Only Uppercase)
@@ -109,13 +151,15 @@ charSets = [
   u'\u5342', u'\u4E43', u'\u531A', u'\u5200', u'\u4E47', u'\u4E0B', u'\u53B6', u'\u5344',
   u'\u5DE5', u'\u4E01', u'\u957F', u'\u4E5A', u'\u4ECE', u'\uD841\uDE28', u'\u53E3', u'\u5C38',
   u'\u353F', u'\u5C3A', u'\u4E02', u'\u4E05', u'\u51F5', u'\u30EA', u'\u5C71', u'\u4E42',
-  u'\u4E2B', u'\u4E59', u'\u5342', u'\u4E43', u'\u531A', u'\u5200', u'\u4E47', u'\u4E0B',
-  u'\u53B6', u'\u5344', u'\u5DE5', u'\u4E01', u'\u957F', u'\u4E5A', u'\u4ECE', u'\uD841\uDE28',
-  u'\u53E3', u'\u5C38', u'\u353F', u'\u5C3A', u'\u4E02', u'\u4E05', u'\u51F5', u'\u30EA',
-  u'\u5C71', u'\u4E42', u'\u4E2B', u'\u4E59', u'0', u'1', u'2', u'3', u'4', u'5', u'6', u'7', u'8', u'9'
+  u'\u4E2B', u'\u4E59',
+  u'\u5342', u'\u4E43', u'\u531A', u'\u5200', u'\u4E47', u'\u4E0B', u'\u53B6', u'\u5344',
+  u'\u5DE5', u'\u4E01', u'\u957F', u'\u4E5A', u'\u4ECE', u'\uD841\uDE28', u'\u53E3', u'\u5C38',
+  u'\u353F', u'\u5C3A', u'\u4E02', u'\u4E05', u'\u51F5', u'\u30EA', u'\u5C71', u'\u4E42',
+  u'\u4E2B', u'\u4E59',
+  u'0', u'1', u'2', u'3', u'4', u'5', u'6', u'7', u'8', u'9'
   ],
   
-  # 9 - Emoji Characters
+  # 9 - Emoji Characters (Only Uppercase)
   [
   u'\uD83C\uDDE6', u'\uD83C\uDDE7', u'\uD83C\uDDE8', u'\uD83C\uDDE9', u'\uD83C\uDDEA',
   u'\uD83C\uDDEB', u'\uD83C\uDDEC', u'\uD83C\uDDED', u'\uD83C\uDDEE', u'\uD83C\uDDEF',
@@ -133,8 +177,7 @@ charSets = [
   u'7\u20E3', u'8\u20E3', u'9\u20E3'
   ],
   
-  # 10 - Discord-Friendly Emoji Characters - Same as Emoji Characters with Space on right side
-  # Prevents creation of flag icons
+  # 10 - Discord-Friendly Emoji Characters (Emoji + Space). Prevents creation of flag emoji
   [
   u'\uD83C\uDDE6 ', u'\uD83C\uDDE7 ', u'\uD83C\uDDE8 ', u'\uD83C\uDDE9 ', u'\uD83C\uDDEA ',
   u'\uD83C\uDDEB ', u'\uD83C\uDDEC ', u'\uD83C\uDDED ', u'\uD83C\uDDEE ', u'\uD83C\uDDEF ',
@@ -240,6 +283,9 @@ class MainWindow(QWidget):
     self.modeSelect.addItem('Hollow Characters')
     self.modeSelect.addItem('Gothic Characters')
     self.modeSelect.addItem('Circled Characters')
+    self.modeSelect.addItem('Negative Circled Characters')
+    self.modeSelect.addItem('Squared Characters')
+    self.modeSelect.addItem('Negative Squared Characters')
     self.modeSelect.addItem(u'乇乂丅尺卂 丅卄工匚匚 Characters')
     self.modeSelect.addItem('Emoji Characters')
     self.modeSelect.addItem('Discord-Friendly Emoji Characters') # Emoji Characters with 1-space either side
@@ -254,6 +300,7 @@ class MainWindow(QWidget):
     self.filterEmojiNumbers = QCheckBox('Filter Emoji Numbers', self)
     self.filterEmojiNumbers.setChecked(True)
     self.filterEmojiNumbers.stateChanged.connect(self.UpdateOutputText)
+    self.filterEmojiNumbers.setToolTip('Emoji Numbers can display weirdly in some text fields.')
     
     self.charCountLabel.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
     self.filterEmojiNumbers.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
