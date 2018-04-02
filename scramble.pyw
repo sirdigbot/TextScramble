@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 
-import sys
 import random
-from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QComboBox, QPlainTextEdit, QLabel, QCheckBox
-from PyQt5.QtWidgets import QSizePolicy
+import wx
 
 
 EMOJISETIDX = 9
 DISCORDSETIDX = 10
+
 
 # Character sets convering a-z, A-Z and 0-9
 charSets = [
@@ -246,106 +244,116 @@ def to_random_text(str, charSet=None, filterEmojiNums=True):
     
   return outputText
 
-  
-  
-class MainWindow(QWidget):
 
-  def __init__(self):
-    super().__init__()
+
+class MainWindow(wx.Frame):
+  
+  def __init__(self, parent, title):
+    super(MainWindow, self).__init__(parent, title=title, size=(720, 400))
+    
+    self.SetMinSize((500, 192))
     self.initUI()
-    self.show()
+    self.Centre()
+    self.Show()
+  
   
   def initUI(self):
-    self.title = 'Text Scrambler'
-    self.setWindowTitle('Text Scrambler')
-    self.resize(QSize(720, 360))
+    mainPanel = wx.Panel(self)
     
-    mainLayout = QVBoxLayout(self)
+    mainLayout = wx.BoxSizer(wx.VERTICAL)
+    
+    # Text I/O
+    self.textInput = wx.TextCtrl(mainPanel, style=wx.TE_MULTILINE)
+    self.textOutput = wx.TextCtrl(mainPanel, style=wx.TE_MULTILINE | wx.TE_READONLY)
+    self.textOutput.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_MENU))
+    
+    # Setup Windows-Only Select All (Ctrl+A) Handler For Text Fields
+    randomId = wx.NewId()
+    self.Bind(wx.EVT_MENU, self.OnSelectAllShortcut, id=randomId)
+    accel_tbl = wx.AcceleratorTable([(wx.ACCEL_CTRL,  ord('A'), randomId)])
+    self.SetAcceleratorTable(accel_tbl)
+    
+    # Setup Scrambler
+    self.textInput.Bind(wx.EVT_TEXT, self.UpdateOutputText)
     
     
-    # Text Input
-    self.textField = QPlainTextEdit(self)
-    self.textField.setPlaceholderText('Enter Text Here..')
-    
-    # Text Output
-    self.displayField = QPlainTextEdit(self)
-    self.displayField.setReadOnly(True)
-    
-    # Connect I/O
-    self.textField.textChanged.connect(self.UpdateOutputText)
-    
-  
     # Font Mode Selection
-    modeLayout = QHBoxLayout(self)
-    self.modeSelect = QComboBox(self)
-    self.modeSelect.addItem('Cursive Characters')
-    self.modeSelect.addItem('Bold Cursive Characters')
-    self.modeSelect.addItem('Hollow Characters')
-    self.modeSelect.addItem('Gothic Characters')
-    self.modeSelect.addItem('Circled Characters')
-    self.modeSelect.addItem('Negative Circled Characters')
-    self.modeSelect.addItem('Squared Characters')
-    self.modeSelect.addItem('Negative Squared Characters')
-    self.modeSelect.addItem(u'乇乂丅尺卂 丅卄工匚匚 Characters')
-    self.modeSelect.addItem('Emoji Characters')
-    self.modeSelect.addItem('Discord-Friendly Emoji Characters') # Emoji Characters with 1-space either side
-    self.modeSelect.addItem('Random')
-    self.randomModeIndex = self.modeSelect.count()-1
-    self.modeSelect.setCurrentIndex(self.randomModeIndex) # Random by default
+    modeLayout = wx.BoxSizer(wx.HORIZONTAL)
+    self.modeSelect = wx.ComboBox(mainPanel, style=wx.CB_READONLY)
+    self.modeSelect.Append('Cursive')
+    self.modeSelect.Append('Bold Cursive')
+    self.modeSelect.Append('Hollow')
+    self.modeSelect.Append('Gothic')
+    self.modeSelect.Append('Circled')
+    self.modeSelect.Append('Negative Circled')
+    self.modeSelect.Append('Squared')
+    self.modeSelect.Append('Negative Squared')
+    self.modeSelect.Append(u'乇乂丅尺卂 丅卄工匚匚')
+    self.modeSelect.Append('Emoji')
+    self.modeSelect.Append('Discord-Friendly Emoji') # Emoji Characters with 1-space either side
+    self.modeSelect.Append('Random')
     
-    self.modeSelect.currentIndexChanged.connect(self.UpdateOutputText)
+    # Set Default Font Mode to randomModeIndex
+    self.randomModeIndex = self.modeSelect.GetCount()-1
+    self.modeSelect.Select(self.randomModeIndex) # Random by default
+    self.modeSelect.Bind(wx.EVT_COMBOBOX, self.UpdateOutputText) # Update on change
     
-    modeLabel = QLabel('Font Mode', self)
-    self.charCountLabel = QLabel('Characters: 0', self)
-    self.filterEmojiNumbers = QCheckBox('Filter Emoji Numbers', self)
-    self.filterEmojiNumbers.setChecked(True)
-    self.filterEmojiNumbers.stateChanged.connect(self.UpdateOutputText)
-    self.filterEmojiNumbers.setToolTip('Emoji Numbers can display weirdly in some text fields.')
+    modeLabel               = wx.StaticText(mainPanel, -1, 'Font Mode')
+    self.charCountLabel     = wx.StaticText(mainPanel, -1, 'Characters: 0')
+    self.filterEmojiNumbers = wx.CheckBox(mainPanel, -1, 'Filter Emoji Numbers')
+    self.filterEmojiNumbers.SetValue(True)
+    self.filterEmojiNumbers.Bind(wx.EVT_CHECKBOX, self.UpdateOutputText)
+    self.filterEmojiNumbers.SetToolTip(wx.ToolTip('Emoji Numbers can display weirdly in some text fields.'))
     
-    self.charCountLabel.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
-    self.filterEmojiNumbers.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
-    modeLabel.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
-    
-    modeLayout.addWidget(self.charCountLabel, 1) # Stretch
-    modeLayout.addWidget(self.filterEmojiNumbers)
-    modeLayout.addWidget(modeLabel)
-    modeLayout.addWidget(self.modeSelect)
+    modeLayout.Add(self.charCountLabel, 1, wx.ALIGN_CENTER_VERTICAL, 0)
+    modeLayout.Add(self.filterEmojiNumbers, 0, wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 6)
+    modeLayout.Add(modeLabel, 0, wx.LEFT | wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 6)
+    modeLayout.Add(self.modeSelect, 0, wx.ALIGN_CENTER_VERTICAL, 0)
     
     
-    # Add to main layout
-    mainLayout.addWidget(self.textField)
-    mainLayout.addWidget(self.displayField)
-    mainLayout.addLayout(modeLayout)
+    # Add to Main Layout
+    mainLayout.Add(self.textInput, 1, wx.EXPAND | wx.TOP | wx.RIGHT | wx.LEFT, 6)
+    mainLayout.Add(self.textOutput, 1, wx.EXPAND | wx.TOP | wx.RIGHT | wx.LEFT, 6)
+    mainLayout.Add(modeLayout, 0, wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, 6)
     
-    self.setLayout(mainLayout)
-    
-    
+    mainPanel.SetSizer(mainLayout)
+  
+  
+  def OnSelectAllShortcut(self, event):
+    if MainWindow.FindFocus() == self.textInput:
+      self.textInput.SetSelection(-1, -1)
+    elif MainWindow.FindFocus() == self.textOutput:
+      self.textOutput.SetSelection(-1, -1)
+ 
+ 
   def GetFontMode(self):
-    return self.modeSelect.currentIndex()
+    return self.modeSelect.GetCurrentSelection()
+    
     
   def UpdateCharCount(self):
-    count = len(self.displayField.toPlainText())
-    self.charCountLabel.setText('Characters: ' + str(count))
-    if count < 8000:
-      self.charCountLabel.setStyleSheet('')
-    elif 8000 <= count < 16000:
-      self.charCountLabel.setStyleSheet('QLabel {color:#e5a020}')
-    elif count >= 16000:
-      self.charCountLabel.setStyleSheet('QLabel {color:#cc0000}')
-    
-  def UpdateOutputText(self):
-    mode = None if self.GetFontMode() == self.randomModeIndex else self.GetFontMode();
-    self.displayField.setPlainText(to_random_text(self.textField.toPlainText(), mode, self.filterEmojiNumbers.isChecked()))
-    self.UpdateCharCount()
+    count = len(self.textOutput.GetValue())
+    self.charCountLabel.SetLabel('Characters: ' + str(count))
+    if count < 7000:
+      self.charCountLabel.SetForegroundColour(wx.NullColour)
+    elif 7000 <= count < 14000:
+      self.charCountLabel.SetForegroundColour((229, 160, 32))
+    elif count >= 14000:
+      self.charCountLabel.SetForegroundColour((204, 0, 0))
   
-    
+  
+  def UpdateOutputText(self, event):
+    mode = None if self.GetFontMode() == self.randomModeIndex else self.GetFontMode()
+    self.textOutput.SetValue(to_random_text(self.textInput.GetValue(), mode, self.filterEmojiNumbers.IsChecked()))
+    self.UpdateCharCount()
 
+
+    
 def main():
-  app = QApplication(sys.argv)
-  wnd = MainWindow()
-  sys.exit(app.exec())
+  app = wx.App()
+  MainWindow(None, 'Text Scrambler')
+  app.MainLoop()
   
   
 if __name__ == "__main__":
   main()
-  
+ 
