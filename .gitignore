@@ -1,8 +1,8 @@
-# Ignore PyInstaller Build
+# Ignore Python Cache
 /__pycache__/**
-/bin/**
-/build/**
-/TextScramble.spec
+
+# Ignore reference files
+/reference/**
 
 # Ignore MSVC Build
 /msvc2017/.vs/**
