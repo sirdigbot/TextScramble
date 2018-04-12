@@ -19001,7 +19001,7 @@ bad:
 #if PY_MAJOR_VERSION < 3
 int main(int argc, char** argv) {
 #elif defined(WIN32) || defined(MS_WINDOWS)
-int main(int argc, wchar_t **argv) {
+int wmain(int argc, wchar_t **argv) {
 #else
 static int __Pyx_main(int argc, wchar_t **argv) {
 #endif
